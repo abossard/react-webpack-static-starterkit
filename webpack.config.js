@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const targetPath = path.join(__dirname, 'dist');
 
-
+//test
 module.exports = {
     name: 'browser',
     // Entry point for static analyzer:
