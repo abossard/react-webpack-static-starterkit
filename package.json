@@ -4,17 +4,14 @@
   "description": "A react and webpack based static starterkit, what else?",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node src/server.js"
   },
   "author": "Andre Bossard",
   "babel": {
     "presets": [
       "react",
-      "es2015",
-      "stage-1"
-    ],
-    "plugins": [
-      "transform-runtime"
+      "es2015"
     ]
   },
   "license": "MIT",
@@ -34,6 +31,7 @@
     "static-site-generator-webpack-plugin": "^2.0.1",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.10.0",
     "webpack-stats-plugin": "^0.1.1"
   }

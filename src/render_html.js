@@ -1,6 +1,6 @@
 var React = require('react'),
   Router = require('react-router'),
-  routes = require('./routes.jsx');
+  routes = require('./routes');
 
 module.exports = function(url) {
   var html;

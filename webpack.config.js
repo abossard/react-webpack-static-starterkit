@@ -13,7 +13,7 @@ module.exports = {
     ],
 
     output: {
-        path: outputPath,
+        path: targetPath,
         filename: 'bundle.js',
         publicPath: '',
     },
@@ -29,7 +29,7 @@ module.exports = {
     module: {
         loaders: [
             { test: /\.css$/, loader: 'style!css' },
-            { test: /\.jsx$/, loaders: ['react-hot', 'jsx'] },
+            { test: /\.jsx?$/, loaders: ['babel-loader'] },
             { test: /\.html$/, loader: 'raw' }
         ]
     }
