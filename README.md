@@ -5,7 +5,7 @@
 What if I told you React can not only be used Client-side, but also Server-side. And what if I added, that you can generate plain boring HTML files out of it, that can be served by any webserver.
 Would you believe it?
 
-Okay, I'm honest, this is more of a playground for me to investigate how to make a static site generator with simple react things.
+Okay, I'm honest, this is more of a playground for me to investigate how to make a static site generator with simple react things. 
 
 ### Features
 
