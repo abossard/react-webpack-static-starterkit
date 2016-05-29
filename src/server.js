@@ -8,68 +8,32 @@ import {renderToString, renderToStaticMarkup} from 'react-dom/server'
 import DocumentTitle from 'react-document-title'
 import R from 'ramda'
 
-const log = debug('SERVER')
-
 import React from 'react'
 import {match, RouterContext, Route, IndexRoute, Router, Link} from 'react-router'
 
-export const App = function (props) {
-    return <div>
-        {props.title}
-        <ul>
-            {props.directories.map(directory => <li><Link to={directory.name}>{directory.name}</Link></li>) }
-        </ul>
-        {props.children}
-    </div>
-}
-
-export const Page = function (props) {
-    return <div>
-        <h1>{props.title}</h1>
-    </div>
-}
-
-const ingestDefaultProps = R.curry(function (defaultProps, InnerComponent, props) {
-    return <InnerComponent {...Object.assign({}, defaultProps, props) }/>
-})
-
-const wrapTitle = R.curry(function (title, InnerComponent, props) {
-    log('WRAPTITLE: ', props.title)
-    return <DocumentTitle title={title}>
-        <InnerComponent {...Object.assign({}, { title }, props) }/>
-    </DocumentTitle>
-})
+import {routes} from './common'
+const log = debug('SERVER')
 
 const Index = function (props) {
     const scripts = props.scripts || []
     const styles = props.styles || []
     return <html>
         <head>
+            <meta charset="utf-8"/>
+            <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
             {styles.map(url => <link type="text/css" href={url} rel="stylesheet" />) }
             <title>{props.title}</title>
         </head>
-        <body>
-            <div className='content' dangerouslySetInnerHTML={{ __html: props.html }}/>
+        <body dangerouslySetInnerHTML={{ __html: props.html }}>
             {scripts.map(url => <script src={url} type="application/javascript"/>) }
         </body>
     </html>
 }
+
 const renderPage = function (renderProps, isRenderStatic = false) {
     const html = (isRenderStatic ? renderToStaticMarkup : renderToString)(<RouterContext {...renderProps}/>)
     return renderToStaticMarkup(<Index title={DocumentTitle.rewind() } html={ html }/>)
-}
-export const directories = [
-    { name: 'home' },
-    { name: 'about' },
-    { name: 'support' },
-]
-export const routes = {
-    path: '/',
-    component: ingestDefaultProps({ directories }, wrapTitle('Static FOR THE WIN', App)),
-    childRoutes: directories.map(directory => ({
-        path: directory.name,
-        component: wrapTitle(directory.name, Page)
-    }))
 }
 
 const app = express()
