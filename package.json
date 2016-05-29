@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env DEBUG=*,-babel nodemon server.js"
+    "start": "cross-env DEBUG=*,-babel nodemon server.js"
   },
   "author": "Andre Bossard",
   "babel": {
@@ -13,6 +13,10 @@
       "react",
       "es2015"
     ]
+  },
+  "engines": {
+    "node": ">=4",
+    "npm": ">=3"
   },
   "license": "MIT",
   "dependencies": {
