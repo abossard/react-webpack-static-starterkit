@@ -39,32 +39,36 @@ const renderPage = function (renderProps, isRenderStatic = false) {
     const html = (isRenderStatic ? renderToStaticMarkup : renderToString)(<RouterContext {...renderProps}/>)
     return renderToStaticMarkup(<Index title={DocumentTitle.rewind() } html={ html } scripts={ scripts }/>)
 }
+export default (options) => {
+    const contentPath = options.contentPath || ''
+    
+    const app = express()
+    app.use(webpackConfig.output.publicPath, express.static(webpackConfig.output.path));
 
-const app = express()
-
-app.use(webpackConfig.output.publicPath, express.static(webpackConfig.output.path));
-
-// app.get('/api/directories', function (req, res) { })
-
-app.get('*', function (req, res) {
-    log('URL: ', req.url)
-    match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
-        if (error) {
-            res.status(500).send(error.message)
-        } else if (redirectLocation) {
-            res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-        } else if (renderProps) {
-            res.status(200).send(renderPage(renderProps, false))
-        } else {
-            res.status(404).send('Not found hihi')
-        }
+    app.get('/api/content', function (req, res) { 
+        res.status(200).send('HIHHI')
     })
-});
 
-app.listen(process.env.PORT || 3000, 'localhost', function (err, result) {
-    if (err) {
-        console.error(err);
-        log(err)
-    }
-    log('Listening at localhost:3000');
-});
+    app.get('*', function (req, res) {
+        log('URL: ', req.url)
+        match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
+            if (error) {
+                res.status(500).send(error.message)
+            } else if (redirectLocation) {
+                res.redirect(302, redirectLocation.pathname + redirectLocation.search)
+            } else if (renderProps) {
+                res.status(200).send(renderPage(renderProps, false))
+            } else {
+                res.status(404).send('Not found hihi')
+            }
+        })
+    });
+
+    app.listen(process.env.PORT || 3000, 'localhost', function (err, result) {
+        if (err) {
+            console.error(err);
+            log(err)
+        }
+        log('Listening at localhost:3000');
+    });
+}
