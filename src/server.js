@@ -10,8 +10,7 @@ import R from 'ramda'
 
 import React from 'react'
 import {match, RouterContext, Route, IndexRoute, Router, Link} from 'react-router'
-
-import {routes} from './common'
+import {routes} from './common.js'
 const log = debug('SERVER')
 
 const Index = function (props) {
@@ -26,21 +25,26 @@ const Index = function (props) {
             <title>{props.title}</title>
         </head>
         <body>
-            <div 
+            <div
                 id="content"
                 dangerouslySetInnerHTML={{ __html: props.html }}
-            />
+                />
             {scripts.map(url => <script src={url} type="application/javascript"/>) }
         </body>
     </html>
 }
 
 const renderPage = function (renderProps, isRenderStatic = false) {
+    const scripts = isRenderStatic ? [] : [webpackConfig.output.publicPath + webpackConfig.output.filename]
     const html = (isRenderStatic ? renderToStaticMarkup : renderToString)(<RouterContext {...renderProps}/>)
-    return renderToStaticMarkup(<Index title={DocumentTitle.rewind() } html={ html }/>)
+    return renderToStaticMarkup(<Index title={DocumentTitle.rewind() } html={ html } scripts={ scripts }/>)
 }
 
 const app = express()
+
+app.use(webpackConfig.output.publicPath, express.static(webpackConfig.output.path));
+
+// app.get('/api/directories', function (req, res) { })
 
 app.get('*', function (req, res) {
     log('URL: ', req.url)
@@ -50,7 +54,7 @@ app.get('*', function (req, res) {
         } else if (redirectLocation) {
             res.redirect(302, redirectLocation.pathname + redirectLocation.search)
         } else if (renderProps) {
-            res.status(200).send(renderPage(renderProps, true))
+            res.status(200).send(renderPage(renderProps, false))
         } else {
             res.status(404).send('Not found hihi')
         }

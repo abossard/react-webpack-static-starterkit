@@ -9,7 +9,7 @@ export const App = function (props) {
     return <div>
         {props.title}
         <ul>
-            {props.directories.map(directory => <li><Link to={directory.name}>{directory.name}</Link></li>) }
+            {props.directories.map(directory => <li key={directory.name}><Link to={directory.name}>{directory.name}</Link></li>) }
         </ul>
         {props.children}
     </div>
