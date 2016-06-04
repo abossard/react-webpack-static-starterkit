@@ -1,6 +1,10 @@
 import React from 'react'
 import {match, RouterContext, Route, IndexRoute, Router, Link} from 'react-router'
 import R from 'ramda'
+import debug from 'debug'
+import DocumentTitle from 'react-document-title'
+const log = debug('COMMON')
+
 export const App = function (props) {
     return <div>
         {props.title}

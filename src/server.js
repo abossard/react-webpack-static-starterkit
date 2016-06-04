@@ -25,7 +25,11 @@ const Index = function (props) {
             {styles.map(url => <link type="text/css" href={url} rel="stylesheet" />) }
             <title>{props.title}</title>
         </head>
-        <body dangerouslySetInnerHTML={{ __html: props.html }}>
+        <body>
+            <div 
+                id="content"
+                dangerouslySetInnerHTML={{ __html: props.html }}
+            />
             {scripts.map(url => <script src={url} type="application/javascript"/>) }
         </body>
     </html>
