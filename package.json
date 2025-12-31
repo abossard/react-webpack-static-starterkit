@@ -31,7 +31,7 @@
     "express": "^4.13.4",
     "functional-react": "^0.1.4",
     "history": "^3.0.0",
-    "install": "^0.8.1",
+    "install": "^0.13.0",
     "nodemon": "^1.9.2",
     "ramda": "^0.21.0",
     "react": "^15.1.0",
